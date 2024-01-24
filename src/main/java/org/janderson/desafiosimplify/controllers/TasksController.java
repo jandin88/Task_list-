@@ -1,14 +1,14 @@
 package org.janderson.desafiosimplify.controllers;
 
+import org.janderson.desafiosimplify.dto.tasks.TasksRequestDto;
+import org.janderson.desafiosimplify.dto.tasks.TasksResponseDto;
 import org.janderson.desafiosimplify.entities.Tasks;
 import org.janderson.desafiosimplify.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,19 +20,19 @@ public class TasksController {
     private TasksService service;
 
     @GetMapping
-    public ResponseEntity<List<Tasks>>findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<TasksResponseDto>> findAll(){
+        return ResponseEntity.ok().body(service.findAllTaskUser());
     }
+
     @GetMapping("{name}")
     public ResponseEntity<Tasks>findByName(@PathVariable String name){
         return ResponseEntity.ok().body(service.findByName(name));
     }
 
     @PostMapping("new")
-    public ResponseEntity<Tasks>createdTasks(@RequestBody Tasks tasks){
-        Tasks newTask= service.createdTask(tasks);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}").buildAndExpand(newTask.getName()).toUri();
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<TasksResponseDto>createdTasks(@RequestBody TasksRequestDto tasks){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createdTask(tasks));
 
     }
 
@@ -45,7 +45,7 @@ public class TasksController {
     @PutMapping("{name}")
     public ResponseEntity<Tasks>updateTasks(@PathVariable String name, @RequestBody Tasks tasks){
        service.updateTasks(tasks,name);
-        return ResponseEntity.noContent().build();
+       return ResponseEntity.noContent().build();
     }
 
 

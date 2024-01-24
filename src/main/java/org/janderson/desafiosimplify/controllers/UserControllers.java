@@ -25,7 +25,7 @@ public class UserControllers {
         return ResponseEntity.ok().body(listDto);
     }
 
-    @PostMapping
+    @PostMapping("register")
     public ResponseEntity<Void> insertUser(@RequestBody UserDto newUser){
         User user= service.fromDto(newUser);
         service.saveNewUser(user);

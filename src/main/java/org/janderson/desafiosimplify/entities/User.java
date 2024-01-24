@@ -3,32 +3,32 @@ package org.janderson.desafiosimplify.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Document
-public class User implements UserDetails {
+public class User {
+
 
     @Id
+    private String id;
     private String email;
     private String name;
     private String password;
 
-    @DBRef(lazy = true)
-    private Tasks tasks;
+    @DBRef
+    private List<Tasks> tasks;
+
 
     public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
     }
-    public User(){}
 
+    public User(){}
 
     public String getEmail() {
         return email;
@@ -46,11 +46,6 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
     public String getPassword() {
         return password;
     }
@@ -59,37 +54,20 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Tasks getTasks() {
+    public List<Tasks> getTasks() {
         return tasks;
     }
-
-    public void setTasks(Tasks tasks) {
+    public void addTask(Tasks task) {
+        if (tasks == null) {
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
+    }
+    public void setTasks(List<Tasks> tasks) {
         this.tasks = tasks;
     }
 
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public String getId() {
+        return id;
     }
 }
