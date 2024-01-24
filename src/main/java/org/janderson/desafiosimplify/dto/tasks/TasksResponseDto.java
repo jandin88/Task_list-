@@ -7,11 +7,11 @@ import org.janderson.desafiosimplify.entities.enuns.Priority;
 import java.time.Instant;
 import java.util.List;
 
-public record TasksResponseDto(String name, String description, String realized, Priority priority, Instant creatTask)
+public record TasksResponseDto(String name, String description, Priority priority, Instant creatTask)
         {
 
             public TasksResponseDto(Tasks tasks){
-                this(tasks.getTitle(),tasks.getDescription(),tasks.getRealized(),tasks.getPriority(),tasks.getCreatTask());
+                this(tasks.getTitle(),tasks.getDescription(),tasks.getPriority(),tasks.getCreatTask());
             }
 
 

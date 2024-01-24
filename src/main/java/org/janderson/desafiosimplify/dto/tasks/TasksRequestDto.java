@@ -8,6 +8,4 @@ public record TasksRequestDto(
 
         String description,
 
-        String realized,
-
         Priority priority) { }
