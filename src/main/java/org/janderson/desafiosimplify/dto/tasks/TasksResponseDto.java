@@ -5,9 +5,8 @@ import org.janderson.desafiosimplify.entities.Tasks;
 import org.janderson.desafiosimplify.entities.enuns.Priority;
 
 import java.time.Instant;
-import java.util.List;
 
-public record TasksResponseDto(String name, String description, Priority priority, Instant creatTask)
+public record TasksResponseDto(String title, String description, Priority priority, Instant creatTask)
         {
 
             public TasksResponseDto(Tasks tasks){

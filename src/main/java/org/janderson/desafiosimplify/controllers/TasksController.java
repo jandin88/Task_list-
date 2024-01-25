@@ -1,8 +1,8 @@
 package org.janderson.desafiosimplify.controllers;
 
+import jakarta.validation.Valid;
 import org.janderson.desafiosimplify.dto.tasks.TasksRequestDto;
 import org.janderson.desafiosimplify.dto.tasks.TasksResponseDto;
-import org.janderson.desafiosimplify.entities.Tasks;
 import org.janderson.desafiosimplify.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,25 +25,24 @@ public class TasksController {
     }
 
     @GetMapping("{name}")
-    public ResponseEntity<Tasks>findByName(@PathVariable String name){
+    public ResponseEntity<TasksResponseDto>findByName(@PathVariable String name){
         return ResponseEntity.ok().body(service.findByName(name));
     }
 
     @PostMapping("new")
-    public ResponseEntity<TasksResponseDto>createdTasks(@RequestBody TasksRequestDto tasks){
-
+    public ResponseEntity<TasksResponseDto>createdTasks(@RequestBody @Valid TasksRequestDto tasks) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createdTask(tasks));
 
     }
 
     @DeleteMapping("{name}")
-    public ResponseEntity<Tasks> deletedTasks(@PathVariable String name){
+    public ResponseEntity<TasksResponseDto> deletedTasks(@PathVariable String name){
         service.deletedTasks(name);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{name}")
-    public ResponseEntity<Tasks>updateTasks(@PathVariable String name, @RequestBody Tasks tasks){
+    public ResponseEntity<TasksResponseDto>updateTasks(@PathVariable String name, @RequestBody TasksRequestDto tasks){
        service.updateTasks(tasks,name);
        return ResponseEntity.noContent().build();
     }

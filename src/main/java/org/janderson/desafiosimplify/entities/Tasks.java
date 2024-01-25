@@ -19,14 +19,13 @@ public class Tasks implements Serializable {
     private String title;
     private String description;
     private Priority priority;
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern ="dd-MM-yyyy HH:mm",timezone = "GMT-3")
     private Instant creatTask;
 
     @DBRef
     private User user;
 
     public Tasks(TasksRequestDto tasksDto,  User user) {
-    this.title = tasksDto.name();
+    this.title = tasksDto.title();
     this.description = tasksDto.description();
     this.priority = tasksDto.priority();
     this.user = user;

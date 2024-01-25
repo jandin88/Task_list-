@@ -1,4 +1,4 @@
-package org.janderson.desafiosimplify.controllers.Exception;
+package org.janderson.desafiosimplify.Exception;
 
 public class StandartError {
 

@@ -18,13 +18,6 @@ public class UserControllers {
     @Autowired
     private UserService service;
 
-    @GetMapping
-    public ResponseEntity<List<UserDto>> findAllUsers(){
-        List<User>listUser= service.findAll();
-        List<UserDto> listDto= listUser.stream().map(UserDto::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
-    }
-
     @PostMapping("register")
     public ResponseEntity<Void> insertUser(@RequestBody UserDto newUser){
         User user= service.fromDto(newUser);
